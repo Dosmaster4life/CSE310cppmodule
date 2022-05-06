@@ -15,6 +15,20 @@ int getUserInput() {
     }
     return amount;
 }
+void writeStringToFile(string fileContents, string filename) {
+    ofstream outputFile;
+ outputFile.open (filename + ".txt");
+  outputFile << fileContents;
+ outputFile.close();
+
+}
+string promptFilePath() {
+cout << "Type a filename for this passphrase to be saved.";
+cout << endl;
+string filename = "";
+cin >> filename;
+return filename;
+}
 
 string getWordsFromFile(int amount) {
     int lineCount = 0;
@@ -39,18 +53,35 @@ string getWordsFromFile(int amount) {
     return passPhrase;
 }
 
+bool writeAnother() {
+    string writeAnother = "";
+    cout << "Would you like to generate another Passphrase ,y for yes or anything else to exit)";
+    cin >> writeAnother;
+    if(writeAnother == "y" || writeAnother == "Y" || writeAnother == "Yes" || writeAnother == "yes") {
+        return true;
+    }else {
+        return false;
+    }
+}
+
 int main() {
+    bool isRunning = true;
+    do{
      srand(time(0)); // used to randomize
     std::cout.flush();
  string result = getWordsFromFile(getUserInput());
 cout << result << endl;
 
  cout << endl;
-//std::cout << combinedWords << endl;
+ string filename = promptFilePath();
+ cout << endl;
+writeStringToFile(result,filename);
+cout << "File written to successfully.";
     std::cout.flush();
 
-    cin.get();
+   isRunning = writeAnother();
 
+    }while(isRunning);
 
 
 return 0;
