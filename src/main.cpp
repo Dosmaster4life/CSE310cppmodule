@@ -15,38 +15,40 @@ int getUserInput() {
     return amount;
 }
 
-vector<string> getWordsFromFile(int amount) {
+string getWordsFromFile(int amount) {
     int lineCount = 0;
     string currentWord;
-    vector<string> listOfWords;
+    string passPhrase = "";
     vector<string> wordList;
     
-    ifstream filePath("words_alpha.txt");
+    fstream filePath("words_alpha.txt");
     while(getline(filePath,currentWord)) {
         wordList.push_back(currentWord);
         lineCount += 1;
+       // cout << currentWord << endl;
     
     }
+     filePath.close();
     for(int i = 0; i < amount; i++) {
-        listOfWords.push_back(wordList[rand() % lineCount]);
+        int rn = rand() % lineCount - 1;
+        passPhrase.append(wordList[rn]);
     }
 
-
-    return listOfWords;
+   
+    return passPhrase;
 }
 
 int main() {
- vector<string> result = getWordsFromFile(getUserInput());
-    string combinedWords = "";
- for(int i = 0; i < result.size(); i++) {
-    combinedWords += result[i] +  " ";
-    cout << result[i] << endl;
-    cin.get();
-    cin.get();
-
- }
-cout << combinedWords << endl;
+     srand(time(0)); // used to randomize 
+    std::cout.flush();
+ string result = getWordsFromFile(getUserInput());
+cout << result << endl;
  
+ cout << endl;
+//std::cout << combinedWords << endl;
+    std::cout.flush();
+   
+    cin.get();
  
 
 
